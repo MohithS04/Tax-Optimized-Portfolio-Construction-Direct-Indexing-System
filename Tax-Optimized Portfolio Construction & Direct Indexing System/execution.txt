@@ -1,0 +1,405 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║     TAX-OPTIMIZED PORTFOLIO CONSTRUCTION & DIRECT INDEXING SYSTEM            ║
+║                          EXECUTION GUIDE                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+Project: Tax-Optimized Portfolio with Direct Indexing & Tax-Loss Harvesting
+Version: 1.2.0
+Last Updated: February 2026
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                              PREREQUISITES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before starting, ensure you have:
+
+    ☐ Python 3.9 or higher (recommended: Python 3.10 or 3.11)
+    ☐ pip package manager
+    ☐ Internet connection (for downloading market data)
+    ☐ ~500MB free disk space
+    ☐ Terminal/Command prompt access
+
+To check Python version:
+    python --version
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         QUICK START (3 COMMANDS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    # 1. Install dependencies
+    pip install -r requirements.txt
+
+    # 2. Run complete demo (downloads data, optimizes, backtests)
+    python main.py demo
+
+    # 3. Launch interactive dashboard
+    python dashboard.py
+
+    Dashboard opens at: http://localhost:8050
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                       DETAILED STEP-BY-STEP GUIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 1: NAVIGATE TO PROJECT DIRECTORY                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    cd "/Users/mohithreddy/Desktop/Realtime Projects/Tax-Optimized Portfolio Construction & Direct Indexing System"
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 2: CREATE VIRTUAL ENVIRONMENT (RECOMMENDED)                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    # Create virtual environment
+    python -m venv venv
+    
+    # Activate on macOS/Linux:
+    source venv/bin/activate
+    
+    # Activate on Windows:
+    venv\Scripts\activate
+
+    ✓ You should see (venv) at the start of your terminal prompt
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 3: INSTALL DEPENDENCIES                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    pip install -r requirements.txt
+
+    ⏱ Duration: 2-5 minutes
+    
+    If you encounter errors, run:
+    pip install "numpy>=1.24,<2.0" "cvxpy>=1.4,<1.8" --force-reinstall
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 4: DOWNLOAD MARKET DATA                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python main.py download
+
+    This downloads:
+    • S&P 500 stock prices (4 years of daily data)
+    • Fama-French factor data (3-factor, 5-factor, momentum)
+    • Risk-free rate data from FRED
+    • Sector classifications from Wikipedia
+    
+    ⏱ Duration: 5-10 minutes (depending on internet speed)
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 5: PREPROCESS DATA                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python main.py preprocess
+
+    This creates:
+    • Returns matrices
+    • Covariance estimates (shrinkage estimator)
+    • Factor loadings
+    • Sector mappings
+    
+    ⏱ Duration: ~1 minute
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 6: RUN PORTFOLIO OPTIMIZATION                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python main.py optimize
+
+    Optimization strategies executed:
+    • Mean-Variance Optimization
+    • Minimum Variance Portfolio
+    • Maximum Sharpe Ratio
+    • Risk Parity
+    • Direct Indexing (track S&P 500 with 50 stocks)
+    • Tax-Aware Optimization
+    
+    ⏱ Duration: 1-2 minutes
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 7: RUN BACKTESTING                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python main.py backtest
+
+    This performs:
+    • Historical simulation (2020-2024)
+    • Performance metrics calculation
+    • Monte Carlo simulation (1000 paths)
+    • Risk analysis (VaR, Sharpe, Sortino)
+    
+    ⏱ Duration: 1-2 minutes
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 8: IDENTIFY TAX-LOSS HARVESTING OPPORTUNITIES                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python main.py harvest
+
+    Analyzes portfolio for:
+    • Unrealized losses eligible for harvesting
+    • Wash sale rule compliance (30-day rule)
+    • Tax benefit calculations
+    • Replacement security suggestions
+    
+    ⏱ Duration: ~30 seconds
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 9: LAUNCH INTERACTIVE DASHBOARD                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    python dashboard.py
+
+    Dashboard opens at: http://localhost:8050
+    
+    Features:
+    • Custom banking background image
+    • Real-time portfolio performance chart
+    • Drawdown analysis
+    • Sector allocation
+    • Tax-loss harvesting opportunities
+    • Monte Carlo forecasts
+    • Glass-morphism card effects
+    • Animated gradient overlays
+
+    Press Ctrl+C to stop the dashboard
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  STEP 10: PUBLIC ACCESS (SHARE WITH ANYONE)                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+    # Option A: One-click script (recommended)
+    ./start_public.sh
+
+    # Option B: Manual with Cloudflare Quick Tunnel
+    python dashboard.py --public
+    # In another terminal:
+    cloudflared tunnel --url http://localhost:8050
+
+    You'll receive a public URL like:
+    https://xxxx-xxxx-xxxx-xxxx.trycloudflare.com
+
+    ✅ NO PASSWORD REQUIRED - Direct access!
+    ✅ Works from any device (laptop, mobile, tablet)
+    ✅ Shareable with anyone worldwide
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                       ALTERNATIVE: RUN COMPLETE DEMO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Instead of Steps 4-8, run everything with one command:
+
+    python main.py demo
+
+This automatically runs: download → preprocess → optimize → backtest → harvest
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         COMMAND REFERENCE CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────────────────────────────┬────────────────────────────────────────────────┐
+│ Command                    │ Description                                    │
+├────────────────────────────┼────────────────────────────────────────────────┤
+│ python main.py demo        │ Run complete demo (all steps)                  │
+│ python main.py download    │ Download market data                           │
+│ python main.py preprocess  │ Preprocess data                                │
+│ python main.py optimize    │ Run portfolio optimization                     │
+│ python main.py backtest    │ Run backtesting & Monte Carlo                  │
+│ python main.py harvest     │ Find tax-loss harvest opportunities            │
+├────────────────────────────┼────────────────────────────────────────────────┤
+│ python dashboard.py        │ Launch local dashboard                         │
+│ python dashboard.py --public│ Launch with network access                    │
+│ python dashboard.py --port 8051│ Use different port                         │
+│ ./start_public.sh          │ Launch with public internet access             │
+└────────────────────────────┴────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                           ACCESS URLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌────────────────────────┬────────────────────────────────────────────────────┐
+│ Access Type            │ URL / Command                                      │
+├────────────────────────┼────────────────────────────────────────────────────┤
+│ Local (this computer)  │ http://localhost:8050                              │
+│ Local Network (WiFi)   │ http://YOUR_IP:8050 (run with --public flag)       │
+│ Public (Internet)      │ Run: ./start_public.sh                             │
+│                        │ Or: cloudflared tunnel --url http://localhost:8050 │
+└────────────────────────┴────────────────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         PROJECT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tax-Optimized Portfolio Construction & Direct Indexing System/
+│
+├── main.py                    # CLI entry point (run commands)
+├── dashboard.py               # Interactive web dashboard
+├── data_download.py           # Data acquisition scripts
+├── requirements.txt           # Python dependencies
+├── execution.txt              # This guide
+├── README.md                  # Project documentation
+├── start_public.sh            # Public access launcher script
+│
+├── assets/                    # Static assets
+│   └── dashboard-bg.png       # Dashboard background image
+│
+├── src/                       # Source code modules
+│   ├── __init__.py
+│   ├── data_preprocessing.py  # Data cleaning & preparation
+│   ├── portfolio_optimizer.py # Optimization algorithms
+│   ├── tax_loss_harvesting.py # Tax-loss harvesting logic
+│   ├── factor_models.py       # Fama-French factor analysis
+│   ├── backtester.py          # Historical backtesting
+│   └── visualization.py       # Chart generation
+│
+├── data/                      # Data files (auto-generated)
+│   ├── sp500_prices.pkl       # Stock price data
+│   ├── ff_factors.pkl         # Fama-French factors
+│   ├── processed_data.pkl     # Preprocessed data
+│   ├── optimization_results.pkl # Optimization results
+│   ├── backtest_results.pkl   # Backtest results
+│   └── harvest_opportunities.pkl # Tax harvesting data
+│
+└── notebooks/                 # Jupyter notebooks (optional)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                        DASHBOARD FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 PERFORMANCE ANALYTICS
+   • Portfolio value chart with 50-day moving average
+   • Interactive zoom, pan, and hover tooltips
+   • Real-time clock and live status indicator
+
+📉 RISK ANALYSIS
+   • Underwater/drawdown chart
+   • Returns distribution histogram
+   • VaR (Value at Risk) metrics
+
+🥧 ALLOCATION VIEWS
+   • Donut chart of top holdings
+   • Horizontal bar chart of sector weights
+   • Sortable holdings table
+
+💰 TAX OPTIMIZATION
+   • Tax-loss harvesting opportunities
+   • Potential tax savings calculations
+   • Wash sale rule compliance
+
+🎯 FORECASTING
+   • Monte Carlo simulation results
+   • 5th/95th percentile projections
+   • Probability of loss estimates
+
+🎨 PROFESSIONAL DESIGN
+   • Custom banking/finance background image
+   • Dark theme with blue accents
+   • Animated gradient overlays
+   • Glass-morphism transparent cards
+   • Glowing orb ambient effects
+   • Scrolling ticker tape header
+   • Live pulse indicators
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                        TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROBLEM: ModuleNotFoundError: No module named 'xxx'
+SOLUTION: pip install -r requirements.txt
+
+PROBLEM: numpy/cvxpy version conflict
+SOLUTION: pip install "numpy>=1.24,<2.0" "cvxpy>=1.4,<1.8" --force-reinstall
+
+PROBLEM: No data files found
+SOLUTION: python main.py download && python main.py preprocess
+
+PROBLEM: Dashboard won't start
+SOLUTION: pip install dash dash-bootstrap-components plotly
+
+PROBLEM: Port 8050 already in use
+SOLUTION: python dashboard.py --port 8051
+     OR: lsof -ti:8050 | xargs kill -9
+
+PROBLEM: Permission denied on start_public.sh
+SOLUTION: chmod +x start_public.sh
+
+PROBLEM: cloudflared not found
+SOLUTION: brew install cloudflared  (macOS)
+     OR: Download from https://developers.cloudflare.com/cloudflare-one/
+
+PROBLEM: Background image not showing
+SOLUTION: Ensure assets/dashboard-bg.png exists in project folder
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                        METRICS GLOSSARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CAGR (Compound Annual Growth Rate)
+    • Annualized return accounting for compounding
+    • Formula: (Final/Initial)^(1/years) - 1
+
+Sharpe Ratio
+    • Risk-adjusted return measure
+    • Formula: (Return - Risk-Free Rate) / Volatility
+    • Interpretation: >1 Good, >2 Excellent, >3 Outstanding
+
+Sortino Ratio
+    • Like Sharpe but only penalizes downside volatility
+    • Better for asymmetric return distributions
+
+Max Drawdown
+    • Largest peak-to-trough decline
+    • Measures worst-case scenario
+    • Lower magnitude is better
+
+Tax Alpha
+    • Additional return from tax-loss harvesting
+    • Typically 0.5% - 1.5% annually
+    • Depends on turnover and tax rates
+
+Tracking Error
+    • Standard deviation of portfolio vs benchmark returns
+    • Lower = portfolio tracks index more closely
+
+VaR (Value at Risk)
+    • Maximum expected loss at given confidence level
+    • 5th percentile = 95% VaR
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                           SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUICK START:
+    pip install -r requirements.txt
+    python main.py demo
+    python dashboard.py
+
+PUBLIC SHARING:
+    ./start_public.sh
+    # Share the generated URL with anyone
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                         VERSION HISTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+v1.0.0 - Initial Release
+    • Core optimization algorithms
+    • Basic backtesting engine
+    • Tax-loss harvesting module
+
+v1.1.0 - Dashboard Update
+    • Interactive Plotly dashboard
+    • Banking dark theme with animations
+    • Public access via Cloudflare tunnel
+
+v1.2.0 - Current Version
+    • Custom background image support
+    • Enhanced glass-morphism effects
+    • Transparent chart backgrounds
+    • Improved public access scripts
+    • Updated documentation
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              END OF GUIDE                                    ║
+╚══════════════════════════════════════════════════════════════════════════════╝
